@@ -6,9 +6,9 @@ public enum PositionDirection {
     SOUTH("South"),
     WEST("West");
 
-    public final String label;
+    public final String direction;
 
-    private (String label) {
-        this.label = label;
+    private PositionDirection(String direction) {
+        this.direction = direction;
     }
 }
