@@ -11,6 +11,10 @@ public abstract class SeaAnimal {
         this.age = age;
     }
 
+    public abstract void move(GridState gridstate, Random random);
+
+    public abstract Position getFirstAvailablePos();
+
     public Position getPosition() {
         return position;
     }
@@ -33,5 +37,13 @@ public abstract class SeaAnimal {
 
     public Position getWestPosition() {
         return new Position(getPosition().row(), getPosition().col() - 1);
+    }
+
+    public boolean isShark() {
+       return this instanceof Shark;
+    }
+
+    public boolean isFish() {
+        return this instanceof Fish;
     }
 }
