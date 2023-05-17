@@ -5,17 +5,18 @@ public abstract class SeaAnimal {
     protected int energy;
     protected int age;
 
+
     public SeaAnimal(Position position, int energy, int age) {
         this.position = position;
         this.energy = energy;
         this.age = age;
     }
 
-    public abstract void move(GridState gridstate, Random random);
+    public abstract void move(GridState gridstate);
 
-    public abstract Position getFirstAvailablePos();
+    public abstract Position firstAvailablePosition(GridState gridState);
 
-    public Position getPosition() {
+    public Position position() {
         return position;
     }
 
@@ -23,20 +24,20 @@ public abstract class SeaAnimal {
         this.position = position;
     }
 
-    public Position getNorthPosition() {
-        return new Position(getPosition().row() + 1, getPosition().col());
+    public Position northPosition() {
+        return new Position(position().row() + 1, position().col());
     }
 
-    public Position getSouthPosition() {
-        return new Position(getPosition().row() - 1, getPosition().col());
+    public Position southPosition() {
+        return new Position(position().row() - 1, position().col());
     }
 
-    public Position getEastPosition() {
-        return new Position(getPosition().row(), getPosition().col() + 1);
+    public Position eastPosition() {
+        return new Position(position().row(), position().col() + 1);
     }
 
-    public Position getWestPosition() {
-        return new Position(getPosition().row(), getPosition().col() - 1);
+    public Position westPosition() {
+        return new Position(position().row(), position().col() - 1);
     }
 
     public boolean isShark() {
