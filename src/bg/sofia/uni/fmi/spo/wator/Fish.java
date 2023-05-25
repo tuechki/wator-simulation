@@ -27,6 +27,7 @@ public class Fish extends SeaAnimal {
 
     }
 
+
     @Override
     public Position firstAvailablePosition(GridState gridState) {
 
