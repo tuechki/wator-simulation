@@ -32,20 +32,10 @@ public class Fish extends SeaAnimal {
     @Override
     public Position firstAvailablePosition(GridState gridState) {
 
-        if(gridState.atPosition(northPosition()) == null) {
-            return northPosition();
-        }
-
-        if(gridState.atPosition(eastPosition()) == null) {
-            return eastPosition();
-        }
-
-        if(gridState.atPosition(southPosition()) == null) {
-            return southPosition();
-        }
-
-        if(gridState.atPosition(westPosition()) == null) {
-            return westPosition();
+        for(var entrySet : gridState.getNeighboursAtPosition(position()).entrySet()) {
+            if(entrySet.getValue() == null) {
+                return entrySet.getKey();
+            }
         }
 
         return null;
