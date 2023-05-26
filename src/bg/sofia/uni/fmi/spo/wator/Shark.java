@@ -12,13 +12,13 @@ public class Shark extends SeaAnimal {
             age++;
             energy--;
 
-            if(age >= Constants.SHARK_BREEDING_AGE) {
-                gridState.addSeaAnimal(new Shark(position));
-            }
-
             Position availablePosition = firstAvailablePosition(gridState);
-            if( availablePosition != null) {
+            if(availablePosition != null) {
                 energy++;
+
+                if(age >= Constants.SHARK_BREEDING_AGE) {
+                    gridState.addSeaAnimal(new Shark(position));
+                }
                 position = availablePosition;
             }
 
@@ -30,6 +30,20 @@ public class Shark extends SeaAnimal {
 
     @Override
     public Position firstAvailablePosition(GridState gridState) {
+        //check if fish is nearby
+        for(var entrySet : gridState.getNeighboursAtPosition(position()).entrySet()) {
+            if(entrySet.getValue().isFish()) {
+                return entrySet.getKey();
+            }
+        }
+
+        //if there are no fish neighbouring the shark check for empty space
+        for(var entrySet : gridState.getNeighboursAtPosition(position()).entrySet()) {
+            if(entrySet.getValue() == null) {
+                return entrySet.getKey();
+            }
+        }
+
         return null;
     }
 
