@@ -24,22 +24,6 @@ public abstract class SeaAnimal {
         this.position = position;
     }
 
-    public Position northPosition() {
-        return new Position(position().row() + 1, position().col());
-    }
-
-    public Position southPosition() {
-        return new Position(position().row() - 1, position().col());
-    }
-
-    public Position eastPosition() {
-        return new Position(position().row(), position().col() + 1);
-    }
-
-    public Position westPosition() {
-        return new Position(position().row(), position().col() - 1);
-    }
-
     public boolean isShark() {
        return this instanceof Shark;
     }
