@@ -1,6 +1,20 @@
 package bg.sofia.uni.fmi.spo.wator;
 
+import java.util.Objects;
+
 public abstract class SeaAnimal {
+
+    public static SeaAnimal of(Position position) {
+        return new SeaAnimal(position, 0, 0) {
+            @Override
+            public void move(GridState gridstate) {}
+
+            @Override
+            public Position firstAvailablePosition(GridState gridState) {
+                return null;
+            }
+        };
+    }
     protected Position position;
     protected int energy;
     protected int age;
@@ -30,5 +44,17 @@ public abstract class SeaAnimal {
 
     public boolean isFish() {
         return this instanceof Fish;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SeaAnimal seaAnimal)) return false;
+        return position.equals(seaAnimal.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position);
     }
 }
