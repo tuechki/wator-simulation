@@ -12,14 +12,17 @@ public class Shark extends SeaAnimal {
             age++;
             energy--;
 
-            Position availablePosition = firstAvailablePosition(gridState);
-            if(availablePosition != null) {
+            Position newPosition = firstAvailablePosition(gridState);
+            if(newPosition != null) {
+
+                Position oldPosition = position;
+                position = newPosition;
                 energy++;
 
                 if(age >= Constants.SHARK_BREEDING_AGE) {
-                    gridState.addSeaAnimal(new Shark(position));
+                    gridState.addSeaAnimal(new Shark(oldPosition));
                 }
-                position = availablePosition;
+
             }
 
 
