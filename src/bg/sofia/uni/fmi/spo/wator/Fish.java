@@ -13,12 +13,15 @@ public class Fish extends SeaAnimal {
             age++;
 
 
-            Position availablePosition = firstAvailablePosition(gridState);
-            if( availablePosition != null) { // only if there is an available it is changed
+            Position newPosition = firstAvailablePosition(gridState);
+            if(newPosition != null) { // only if there is an available it is changed
+
+                Position oldPosition = position;
+                position = newPosition;
+
                 if(age >= Constants.FISH_BREEDING_AGE) {
-                    gridState.addSeaAnimal(new Fish(position));
+                    gridState.addSeaAnimal(new Fish(oldPosition));
                 }
-                position = availablePosition;
             }
 
 
