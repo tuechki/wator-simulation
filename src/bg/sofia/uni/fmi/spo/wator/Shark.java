@@ -34,14 +34,14 @@ public class Shark extends SeaAnimal {
     @Override
     public Position firstAvailablePosition(GridState gridState) {
         //check if fish is nearby
-        for(var entrySet : gridState.getNeighboursAtPosition(position()).entrySet()) {
+        for(var entrySet : gridState.neighboursAtPosition(position()).entrySet()) {
             if(entrySet.getValue().isFish()) {
                 return entrySet.getKey();
             }
         }
 
         //if there are no fish neighbouring the shark check for empty space
-        for(var entrySet : gridState.getNeighboursAtPosition(position()).entrySet()) {
+        for(var entrySet : gridState.neighboursAtPosition(position()).entrySet()) {
             if(entrySet.getValue() == null) {
                 return entrySet.getKey();
             }
