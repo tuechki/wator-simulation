@@ -46,5 +46,7 @@ public class Fish extends SeaAnimal {
         if(gridState.atPosition(westPosition()) == null) {
             return westPosition();
         }
+
+        return null;
     }
 }
