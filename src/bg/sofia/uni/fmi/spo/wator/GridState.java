@@ -19,7 +19,7 @@ public class GridState {
 
     public Map<Position, SeaAnimal> getNeighboursAtPosition(Position position) {
 
-        Map<Position, SeaAnimal> neighbouringSeaAnimals = new HashMap();
+        Map<Position, SeaAnimal> neighbouringSeaAnimals = new HashMap<>();
         neighbouringSeaAnimals.put(northOf(position), atPosition(northOf(position)));
         neighbouringSeaAnimals.put(eastOf(position), atPosition(eastOf(position)));
         neighbouringSeaAnimals.put(southOf(position), atPosition(southOf(position)));
