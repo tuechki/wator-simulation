@@ -35,7 +35,7 @@ public class Fish extends SeaAnimal {
     @Override
     public Position firstAvailablePosition(GridState gridState) {
 
-        for(var entrySet : gridState.getNeighboursAtPosition(position()).entrySet()) {
+        for(var entrySet : gridState.neighboursAtPosition(position()).entrySet()) {
             if(entrySet.getValue() == null) {
                 return entrySet.getKey();
             }
