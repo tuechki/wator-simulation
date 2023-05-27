@@ -5,6 +5,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GridState {
 
@@ -39,11 +43,37 @@ public class GridState {
     private Set<SeaAnimal> seaAnimals;
     private final int height;
     private final int width;
+    private final ReentrantLock[] rowLocks;
+    private final Semaphore[] isRowUpdated;
 
     private GridState(int height, int width, Set<SeaAnimal> seaAnimals) {
         this.height = height;
         this.width = width;
         this.seaAnimals = seaAnimals;
+        this.rowLocks = Stream.generate(ReentrantLock::new).limit(height).toArray(ReentrantLock[]::new);
+        this.isRowUpdated = Stream.generate(() -> new Semaphore(0)).limit(height).toArray(Semaphore[]::new);
+    }
+
+    public void lockRow(int row) {
+        rowLocks[row].lock();
+    }
+
+    public void unlockRow(int row) {
+        rowLocks[row].unlock();
+    }
+
+    public void waitForUpdate(int row) {
+        try {
+            isRowUpdated[row].acquire();
+        } catch (InterruptedException e) {
+            //TODO: Throw a meaningful exception
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public void signalUpdated(int row) {
+        isRowUpdated[row].release();
     }
 
     public SeaAnimal atPosition(Position position) {
@@ -51,6 +81,12 @@ public class GridState {
             .filter(seaAnimal -> seaAnimal.position().equals(position))
             .findAny()
             .orElse(null);
+    }
+
+    public Set<SeaAnimal> atRow(int row) {
+        return seaAnimals().stream()
+            .filter(seaAnimal -> seaAnimal.position().row() == row)
+            .collect(Collectors.toSet());
     }
 
     public boolean isEmptyPosition(Position position) {
