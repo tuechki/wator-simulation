@@ -21,12 +21,12 @@ public class Constants {
     public static final int MIN_ENERGY = 0;
 
 
-    public static final int WORLD_HEIGHT = 1080;
-    public static final int WORLD_WIDTH = 1920;
-    public static final int FISH_COUNT = 1000000;
-    public static final int SHARKS_COUNT = 10000;
+    public static final int WORLD_HEIGHT = 100;
+    public static final int WORLD_WIDTH = 200;
+    public static final int FISH_COUNT = 50;
+    public static final int SHARKS_COUNT = 50;
     public static final int THREADS_COUNT = 8;
-    public static final int ITERATIONS = 100;
+    public static final int ITERATIONS = 1000;
 
 
 
