@@ -35,7 +35,8 @@ public class Shark extends SeaAnimal {
     public Position firstAvailablePosition(GridState gridState) {
         //check if fish is nearby
         for(var entrySet : gridState.neighboursAtPosition(position()).entrySet()) {
-            if(entrySet.getValue().isFish()) {
+            if(entrySet.getValue() != null && entrySet.getValue().isFish()) {
+                gridState.removeAtPosition(entrySet.getKey());
                 return entrySet.getKey();
             }
         }
