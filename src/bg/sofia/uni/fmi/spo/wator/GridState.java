@@ -1,10 +1,10 @@
 package bg.sofia.uni.fmi.spo.wator;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ public class GridState {
     public static GridState initialRandom(int height, int width, int fishCount, int sharkCount) {
 
         var random = new Random(0);
-        GridState gridState = new GridState(height, width, new HashSet<>());
+        GridState gridState = new GridState(height, width, ConcurrentHashMap.newKeySet());
 
         int currentFishCount = 0;
         while (currentFishCount < fishCount) {
@@ -40,13 +40,14 @@ public class GridState {
         return gridState;
     }
 
-    private Set<SeaAnimal> seaAnimals;
+//    private Set<SeaAnimal> seaAnimals;
+    private final Map<Integer, SeaAnimal> seaAnimals;
     private final int height;
     private final int width;
     private final ReentrantLock[] rowLocks;
     private final Semaphore[] isRowUpdated;
 
-    private GridState(int height, int width, Set<SeaAnimal> seaAnimals) {
+    public GridState(int height, int width, Map<Integer, SeaAnimal> seaAnimals) {
         this.height = height;
         this.width = width;
         this.seaAnimals = seaAnimals;
@@ -113,18 +114,30 @@ public class GridState {
     }
 
     public Position northOf(Position position) {
+        if(position.row() == lastRow()) {
+            return new Position(firstRow(), position.col());
+        }
         return new Position(position.row() + 1, position.col());
     }
 
     public Position southOf(Position position) {
+        if(position.row() == firstRow()) {
+            return new Position(lastRow(), position.col());
+        }
         return new Position(position.row() - 1, position.col());
     }
 
     public Position eastOf(Position position) {
+        if(position.col() == lastCol()) {
+            return new Position(position.row(), firstCol());
+        }
         return new Position(position.row(), position.col() + 1);
     }
 
     public Position westOf(Position position) {
+        if(position.col() == firstCol()) {
+            return new Position(position.row(), lastCol());
+        }
         return new Position(position.row(), position.col() - 1);
     }
 
@@ -138,5 +151,21 @@ public class GridState {
 
     public int width() {
         return width;
+    }
+
+    public int firstRow() {
+        return 0;
+    }
+
+    public int lastRow() {
+        return height() - 1;
+    }
+
+    public int firstCol() {
+        return 0;
+    }
+
+    public int lastCol() {
+        return width() - 1;
     }
 }
