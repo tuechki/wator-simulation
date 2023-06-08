@@ -1,13 +1,11 @@
 package bg.sofia.uni.fmi.spo.wator;
 
 import java.util.Objects;
-import java.util.Random;
 
 public abstract class SeaAnimal {
     protected Position position;
     protected int energy;
     protected int age;
-
 
     public SeaAnimal(Position position, int energy, int age) {
         this.position = position;
@@ -15,7 +13,7 @@ public abstract class SeaAnimal {
         this.age = age;
     }
 
-    public abstract void move(GridState gridstate, Random random);
+    public abstract void move(GridState gridstate);
 
     public abstract Position firstAvailablePosition(GridState gridState);
 
