@@ -5,7 +5,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public record World(GridState gridState, int threadsCount, int sleepBetweenIterations) {
-
     public void updateGridState(long iterations) {
         ExecutorService executorService = Executors.newFixedThreadPool(threadsCount);
         int size = gridState.height() / threadsCount;
