@@ -11,6 +11,25 @@ public class Simulation {
         int threadsCount = Constants.THREADS_COUNT;
         int iterations = Constants.ITERATIONS;
 
+        if (args.length > 0) {
+            height = Integer.parseInt(args[0]);
+        }
+        if (args.length > 1) {
+            width = Integer.parseInt(args[1]);
+        }
+        if (args.length > 2) {
+            fishCount = Integer.parseInt(args[2]);
+        }
+        if (args.length > 3) {
+            sharksCount = Integer.parseInt(args[3]);
+        }
+        if (args.length > 4) {
+            threadsCount = Integer.parseInt(args[4]);
+        }
+        if (args.length > 5) {
+            iterations = Integer.parseInt(args[5]);
+        }
+
         System.out.printf("""
                         Height: %d
                         Width: %d
@@ -22,7 +41,7 @@ public class Simulation {
             height, width, fishCount, sharksCount, threadsCount, iterations);
 
         var initialState = GridState.initialRandom(height, width, fishCount, sharksCount);
-        var world = new World(initialState, threadsCount, 200);
+        var world = new World(initialState, threadsCount, 0);
 
         long startTime = System.nanoTime();
 
