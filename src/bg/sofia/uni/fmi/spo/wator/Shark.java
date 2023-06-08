@@ -8,40 +8,38 @@ public class Shark extends SeaAnimal {
     @Override
     public void move(GridState gridState) {
 
-        if (energy != Constants.MIN_ENERGY && age != Constants.SHARK_MAX_AGE) {
-            age++;
-            energy--;
-
-            Position newPosition = firstAvailablePosition(gridState);
-            if(newPosition != null) {
-
-                Position oldPosition = position;
-                position = newPosition;
-                energy++;
-
-                if(age >= Constants.SHARK_BREEDING_AGE) {
-                    gridState.addSeaAnimal(new Shark(oldPosition));
-                }
-
-            }
-
-
-        } else {
+        if (energy != Constants.ENERGY_IMMORTAL && energy <= Constants.MIN_ENERGY || age > Constants.SHARK_MAX_AGE) {
             gridState.removeAtPosition(position);
+            return;
         }
+
+        Position newPosition = firstAvailablePosition(gridState);
+        if (newPosition != null) {
+            if (gridState.atPosition(newPosition) != null && gridState.atPosition(newPosition).isFish()) {
+                energy++;
+            } else {
+                energy--;
+            }
+            gridState.moveToPosition(newPosition, this);
+
+            age++;
+            if (age >= Constants.SHARK_BREEDING_AGE) {
+                SeaAnimal newShark = new Shark(position);
+                gridState.addSeaAnimal(newShark.position(), newShark);
+            }
+            position = newPosition;
+        }
+
     }
 
     @Override
     public Position firstAvailablePosition(GridState gridState) {
-        //check if fish is nearby
         for(var entrySet : gridState.neighboursAtPosition(position()).entrySet()) {
             if(entrySet.getValue() != null && entrySet.getValue().isFish()) {
-                gridState.removeAtPosition(entrySet.getKey());
                 return entrySet.getKey();
             }
         }
 
-        //if there are no fish neighbouring the shark check for empty space
         for(var entrySet : gridState.neighboursAtPosition(position()).entrySet()) {
             if(entrySet.getValue() == null) {
                 return entrySet.getKey();
