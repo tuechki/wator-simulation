@@ -5,28 +5,34 @@ public class Fish extends SeaAnimal {
         super(position, Constants.FISH_INITIAL_ENERGY, Constants.FISH_INITIAL_AGE);
     }
 
-
     @Override
     public void move(GridState gridState) {
 
-        if (age != Constants.FISH_MAX_AGE) {
+        if (energy != Constants.ENERGY_IMMORTAL && energy <= Constants.MIN_ENERGY || age > Constants.FISH_MAX_AGE) {
+            gridState.removeAtPosition(position);
+            return;
+        }
+
+        if (gridState.atPosition(position).isShark()) {
+            return;
+        }
+
+        if (energy != Constants.ENERGY_IMMORTAL) {
+            energy--;
+        }
+
+        Position newPosition = firstAvailablePosition(gridState);
+
+        if (newPosition != null) {
+            gridState.moveToPosition(newPosition, this);
+
             age++;
-
-
-            Position newPosition = firstAvailablePosition(gridState);
-            if(newPosition != null) { // only if there is an available it is changed
-
-                Position oldPosition = position;
-                position = newPosition;
-
-                if(age >= Constants.FISH_BREEDING_AGE) {
-                    gridState.addSeaAnimal(new Fish(oldPosition));
-                }
+            if (age >= Constants.FISH_BREEDING_AGE) {
+                SeaAnimal newFish = new Fish(position);
+                gridState.addSeaAnimal(newFish.position(), newFish);
             }
 
-
-        } else {
-            gridState.removeAtPosition(position);
+            position = newPosition;
         }
 
     }
