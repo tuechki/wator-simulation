@@ -49,9 +49,9 @@ public class GuiSimulation extends JPanel {
     private void paintCell(Graphics g, SeaAnimal seaAnimal, Position position) {
         var color = Constants.OCEAN_COLOR;
 
-        if (seaAnimal.isFish()) {
+        if (seaAnimal != null && seaAnimal.isFish()) {
             color = Constants.FISH_COLOR;
-        } else if (seaAnimal.isShark()) {
+        } else if (seaAnimal != null && seaAnimal.isShark()) {
             color = Constants.SHARK_COLOR;
         }
         g.setColor(color);
