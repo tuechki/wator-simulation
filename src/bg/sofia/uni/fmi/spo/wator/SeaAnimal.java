@@ -1,20 +1,9 @@
 package bg.sofia.uni.fmi.spo.wator;
 
 import java.util.Objects;
+import java.util.Random;
 
 public abstract class SeaAnimal {
-
-    public static SeaAnimal of(Position position) {
-        return new SeaAnimal(position, 0, 0) {
-            @Override
-            public void move(GridState gridstate) {}
-
-            @Override
-            public Position firstAvailablePosition(GridState gridState) {
-                return null;
-            }
-        };
-    }
     protected Position position;
     protected int energy;
     protected int age;
@@ -26,16 +15,12 @@ public abstract class SeaAnimal {
         this.age = age;
     }
 
-    public abstract void move(GridState gridstate);
+    public abstract void move(GridState gridstate, Random random);
 
     public abstract Position firstAvailablePosition(GridState gridState);
 
     public Position position() {
         return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
     }
 
     public boolean isShark() {
