@@ -3,9 +3,6 @@ package bg.sofia.uni.fmi.spo.wator;
 import java.awt.*;
 
 public class Constants {
-
-
-
     public static final int ENERGY_IMMORTAL = -1;
     public static final int FISH_INITIAL_ENERGY = ENERGY_IMMORTAL;
     public static final int FISH_INITIAL_AGE = 0;
@@ -15,7 +12,7 @@ public class Constants {
 
     public static final int SHARK_INITIAL_ENERGY = 10;
     public static final int SHARK_INITIAL_AGE = 0;
-    public static final int SHARK_MAX_AGE = 30;
+    public static final int SHARK_MAX_AGE = 20;
     public static final int SHARK_BREEDING_AGE = 15;
 
     public static final int MIN_ENERGY = 0;
@@ -24,7 +21,7 @@ public class Constants {
     public static final int WORLD_HEIGHT = 700;
     public static final int WORLD_WIDTH = 900;
     public static final int FISH_COUNT = 100000;
-    public static final int SHARKS_COUNT = 20000;
+    public static final int SHARKS_COUNT = 2000;
     public static final int THREADS_COUNT = 4;
     public static final int ITERATIONS = 1000;
 
